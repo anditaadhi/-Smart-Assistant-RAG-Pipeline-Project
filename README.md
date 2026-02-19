@@ -27,6 +27,13 @@ Files → Kafka → Qdrant (VectorDB) → Ollama (LLM) → Streamlit (UI)
 - Python 3.10+
 - Docker & Docker Compose
 
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Kafka](https://img.shields.io/badge/Kafka-231F20?style=flat&logo=apachekafka&logoColor=white)
+![Qdrant](https://img.shields.io/badge/Qdrant-DC244C?style=flat&logo=qdrant&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-llama3.2-black?style=flat&logo=ollama&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)
+
 ### Steps
 
 **1. Clone the repository**
