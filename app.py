@@ -9,10 +9,7 @@ import re
 st.set_page_config(page_title="Alstom Knowledge Assistant", page_icon="🚂", layout="wide")
 
 def apply_masking(text):
-    """Hassas içerikleri (Telefon, E-posta) maskeler."""
-    # Telefon numaralarını maskele (Örn: 05xx xxx xx xx)
     text = re.sub(r'\d{10,11}', '[MASKED_PHONE]', text)
-    # E-postaları maskele
     text = re.sub(r'\S+@\S+', '[MASKED_EMAIL]', text)
     return text
 
@@ -76,7 +73,6 @@ with st.sidebar:
     if st.session_state.role == "admin":
         st.divider()
         if st.sidebar.checkbox("🔍 View Audit Logs (Admin)"):
-            st.subheader("🛡️ System Audit Trail")
             try:
                 with open("alstom_audit.log", "r", encoding="utf-8") as f:
                     log_data = f.readlines()
@@ -96,7 +92,7 @@ with st.sidebar:
             except FileNotFoundError:
                 st.caption("No created log file yet.")
 
-# --- ANA PANEL ---
+# MAIN
 st.title("🤖 Alstom Knowledge Assistant")
 st.divider()
 
@@ -115,7 +111,6 @@ with col1:
                 else: st.error(message)
         
         with c2:
-            # Silme Butonu
             if st.button("🗑️ Delete", use_container_width=True):
                 success, message = delete_document(uploaded_file.name, producer, KAFKA_TOPIC)
                 if success:
@@ -173,4 +168,5 @@ with col2:
                         except Exception as e:
                             st.error(f"System Error: {e}")
                             
+
                             
