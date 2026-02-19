@@ -30,14 +30,9 @@ def get_ai_response(prompt, role, embedder, qdrant, collection, ollama_url, mode
     for i, r in enumerate(results):
         text = r.payload.get('text', '')
         context += f"[{i+1}] {text}\n\n"
-        
-        # Değişkenleri güvenli bir şekilde alalım
         doc = r.payload.get('doc_name', 'Unknown')
-        # Metadata içindeyse r.payload.get('metadata', {}).get('page') kullanabilirsin
         page = r.payload.get('page_number', 'N/A')
         score = r.score 
-
-        # Burada 'point' yerine 'doc', 'page' ve 'score' değişkenlerini kullanıyoruz
         citations.append(f"📄 {doc} | 📑 Page: {page} | 🎯 Score: {score:.2f}")
     
     sys_prompt = f"""You are a document assistant. Answer ONLY based on the context below. 
@@ -50,4 +45,5 @@ Context:
 Question: {prompt}"""
     resp = requests.post(ollama_url, json={"model": model, "messages": [{"role": "user", "content": sys_prompt}], "stream": False})
     
+
     return resp.json().get("message", {}).get("content", "Error"), citations
