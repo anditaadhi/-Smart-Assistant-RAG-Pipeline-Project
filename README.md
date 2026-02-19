@@ -1,108 +1,131 @@
-# -Smart-Assistant-RAG-Pipeline-Project
+# 🤖 Smart Assistant — RAG Pipeline
 
-An enterprise-grade RAG (Retrieval-Augmented Generation) based knowledge assistant. It processes documents in PDF, DOCX, HTML, and CSV formats via Kafka, indexes them into the Qdrant vector database, and answers user queries with cited sources.
+An enterprise-grade knowledge assistant. Documents are processed via Kafka, indexed into Qdrant, and queries are answered with cited sources.
 
-## Architecture
+```
+Files → Kafka → Qdrant (VectorDB) → Ollama (LLM) → Streamlit (UI)
+```
 
-Files → Kafka → VectorDB (Qdrant) → RAG (Ollama) → UI (Streamlit)
+> Supports **PDF, DOCX, HTML, CSV** formats.
 
-- **Files**: Supports PDF, DOCX, HTML, and CSV formats.
-- **Kafka**: Event-driven orchestration layer (handles upload/delete/update events).
-- **Qdrant**: Stores chunks and embeddings; handles semantic retrieval.
-- **Ollama (llama3.2)**: Local LLM that generates responses with citations.
-- **Streamlit**: Web interface featuring Role-Based Access Control (RBAC).
+---
 
-## Installation
+## 🏗️ Architecture
+
+| Component | Role |
+|-----------|------|
+| **Kafka** | Event-driven orchestration (upload / delete / update) |
+| **Qdrant** | Stores chunks & embeddings, handles semantic retrieval |
+| **Ollama (llama3.2)** | Local LLM, generates responses with citations |
+| **Streamlit** | Web UI with Role-Based Access Control (RBAC) |
+
+---
+
+## ⚙️ Installation
 
 ### Prerequisites
-
 - Python 3.10+
 - Docker & Docker Compose
 
-### 1. Clone the Repository
+### Steps
 
-bash
+**1. Clone the repository**
+```bash
 git clone <repo-url>
 cd rag-project
+```
 
-2. Create the .env File
-
+**2. Create the `.env` file**
+```bash
 cp .env.example .env
-
-Fill in the .env file:
-
+```
+```env
 ADMIN_PASSWORD=your_admin_password
 USER_PASSWORD=your_user_password
+```
 
-3. Start Docker Services
-   docker-compose up -d
+**3. Start Docker services**
+```bash
+docker-compose up -d
+```
 
-4. Pull the Ollama Model
-   docker exec ollama_llm ollama pull llama3.2
+**4. Pull the Ollama model**
+```bash
+docker exec ollama_llm ollama pull llama3.2
+```
 
-5. Install Dependencies
-    pip install -r requirements.txt
+**5. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-6. Start the Consumer (Terminal 1)
-   python consumer.py
+**6. Start the consumer** *(Terminal 1)*
+```bash
+python consumer.py
+```
 
-7. Launch the Application (Terminal 2)
-   streamlit run app.py
+**7. Launch the application** *(Terminal 2)*
+```bash
+streamlit run app.py
+```
 
-Usage
-Login
-User	Role
-admin	admin
-user  engineer
-user2 hr
-...
+---
 
-Document Uploading
+## 🚀 Usage
+
+### Login
+
+| Username | Role |
+|----------|------|
+| `admin` | admin |
+| `user` | engineer |
+| `user2` | hr |
+
+### Document Uploading
 
 RBAC is automatically applied based on the filename prefix:
-Prefix	Access Level
-hr_	admin, HR
-eng_	admin, engineer
-policy_	admin, engineer, HR
-No prefix	admin + the uploader's role
 
-Example: hr_recruitment.pdf → Accessible only by admin and HR.
+| Prefix | Access |
+|--------|--------|
+| `hr_` | admin, HR |
+| `eng_` | admin, engineer |
+| `policy_` | admin, engineer, HR |
+| *(no prefix)* | admin + uploader's role |
 
-Querying
+> **Example:** `hr_recruitment.pdf` → accessible only by admin and HR.
 
-Once documents are uploaded, you can ask questions via the chat interface. Citations like [1] and [2] within the response are displayed in the "Reference Sources" panel, showing the document name, page number, and similarity score.
+### Querying
+Ask questions via the chat interface. Citations like `[1]` `[2]` in responses link to the **Reference Sources** panel, showing document name, page, and similarity score.
 
-Audit Log
-Admin users can monitor all queries and document operations by checking the "View Audit Logs" box in the sidebar.
+### Audit Log
+Admin users can enable **View Audit Logs** in the sidebar to monitor all queries and document operations.
 
-Security
+---
 
-    Credentials: User credentials are stored in the .env file, not hardcoded.
+## 🔒 Security
 
-    RBAC: Every chunk is tagged with allowed_roles metadata; queries are filtered by role.
+- **Credentials** — stored in `.env`, never hardcoded
+- **RBAC** — every chunk tagged with `allowed_roles`; queries filtered by role
+- **Masking** — phone numbers and emails in responses are auto-masked
+- **Audit Log** — tracks who asked what and which documents were used
 
-    Masking: Phone numbers and email addresses in responses are automatically masked.
+---
 
-    Audit Log: Tracks who asked what and which documents were used to generate the response.
+## 🔧 Technical Notes
 
-Technical Notes
+| Parameter | Value |
+|-----------|-------|
+| Chunk size | 800 tokens |
+| Overlap | 150 tokens |
+| Embedding model | `all-MiniLM-L6-v2` (384 dims) |
+| Qdrant collection | `alstom_docs` — cosine similarity |
+| Retrieval | Top-3 semantic search |
 
-    Chunk size: 800 tokens, Overlap: 150 tokens.
+---
 
-    Embedding model: all-MiniLM-L6-v2 (384 dimensions).
+## ⚠️ Known Limitations
 
-    Qdrant collection: alstom_docs, using cosine similarity.
-
-    Retrieval: Top-3 semantic search.
-
-Known Limitations
-
-    Response times may be slow as Ollama runs on a local CPU. For production, switching to GPU or OpenAI/Anthropic APIs is recommended.
-
-    The current single consumer handles the entire pipeline (parsing, chunking, embedding) sequentially. In a scalable version, separate Kafka consumer groups should be defined for OCR, chunking, and embedding.
-
-    RBAC user management is currently .env based. LDAP/SSO integration is recommended for production environments.
-
-    For production environments, using tools such as S3 for metadata storage and the ELK Stack (Elasticsearch, Logstash, Kibana) for centralized logging is highly recommended.
-
-
+- **Performance** — Ollama runs on CPU; consider GPU or OpenAI/Anthropic APIs for production.
+- **Scalability** — Single consumer handles the full pipeline. A production setup should use separate Kafka consumer groups for OCR, chunking, and embedding.
+- **User management** — Currently `.env`-based; LDAP/SSO recommended for production.
+- **Storage & logging** — For production, use S3 for metadata and ELK Stack for centralized logging.
