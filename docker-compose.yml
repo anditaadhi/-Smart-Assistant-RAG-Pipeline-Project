@@ -1,5 +1,4 @@
 services:
-  # 1. Qdrant (Vektör Veritabanı)
   qdrant:
     image: qdrant/qdrant:latest
     restart: always
@@ -8,8 +7,7 @@ services:
       - "6333:6333"
     volumes:
       - qdrant_data:/qdrant/storage
-
-  # 2. Kafka (Wurstmeister Versiyonu - Daha Hafif ve Stabil)
+      
   zookeeper:
     image: wurstmeister/zookeeper
     restart: always
@@ -30,7 +28,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  # 3. Ollama (Lokal Yapay Zeka Motoru)
   ollama:
     image: ollama/ollama:latest
     restart: always
@@ -42,4 +39,5 @@ services:
 
 volumes:
   qdrant_data:
+
   ollama_data:
