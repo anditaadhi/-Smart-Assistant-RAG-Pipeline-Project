@@ -1,0 +1,10 @@
+streamlit==1.31.0
+langchain==0.1.10
+langchain-community==0.0.25
+qdrant-client==1.7.3
+kafka-python==2.0.2
+PyPDF2==3.0.1
+sentence-transformers==2.5.1
+python-docx
+beautifulsoup4
+python-dotenv
